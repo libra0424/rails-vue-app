@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,17 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_006_160_315) do
-  create_table 'employees', force: :cascade do |t|
-    t.string 'name', default: '', null: false
-    t.string 'department', default: '', null: false
-    t.integer 'gender', default: 0, null: false
-    t.date 'birth'
-    t.date 'joined_date'
-    t.bigint 'payment', default: 0, null: false
-    t.text 'note', default: '', null: false
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.integer 'lock_version'
+ActiveRecord::Schema.define(version: 2021_10_06_162339) do
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.integer "resource_id"
+    t.string "author_type"
+    t.integer "author_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
   end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "department", default: "", null: false
+    t.integer "gender", default: 0, null: false
+    t.date "birth"
+    t.date "joined_date"
+    t.bigint "payment", default: 0, null: false
+    t.text "note", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "lock_version"
+  end
+
 end
