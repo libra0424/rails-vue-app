@@ -3,6 +3,8 @@
     <dt>ID</dt>
     <dd>{{ employee.id }}</dd>
     <dt>Name</dt>
+    <dd>{{ employee.name }}</dd>
+    <dt>Department</dt>
     <dd>{{ employee.department }}</dd>
     <dt>Gender</dt>
     <dd>{{ employee.gender }}</dd>

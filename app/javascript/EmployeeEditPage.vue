@@ -1,37 +1,32 @@
 <template>
-  <employee-form-pane :errors="errors" :employee="employee" @submit="createEmployee"></employee-form-pane>
+  <employee-form-pane :errors="errors" :employee="employee" @submit="updateEmployee"></employee-form-pane>
 </template>
 
 <script>
 import axios from 'axios';
 
 import EmployeeFormPane from 'EmployeeFormPane.vue';
-
 export default {
   components: {
     EmployeeFormPane
   },
   data() {
     return {
-      employee: {
-        name: '',
-        department: '',
-        gender: '',
-        birth: '',
-        joined_date: '',
-        payment: '',
-        note: ''
-      },
+      employee: {},
       errors: ''
     }
   },
+  mounted () {
+    axios
+      .get(`/api/v1/employees/${this.$route.params.id}.json`)
+      .then(response => (this.employee = response.data))
+  },
   methods: {
-    createEmployee: function() {
+    updateEmployee: function() {
       axios
-        .post('/api/v1/employees', this.employee)
+        .patch(`/api/v1/employees/${this.employee.id}`, this.employee)
         .then(response => {
-          let e = response.data;
-          this.$router.push({ name: 'EmployeeDetailPage', params: { id: e.id } });
+          this.$router.push({ name: 'EmployeeDetailPage', params: { id: this.employee.id } });
         })
         .catch(error => {
           console.error(error);
