@@ -1,5 +1,5 @@
 class Api::V1::EmployeesController < ApiController
-  before_action :set_employee, only: [:show, :update]
+  before_action :set_employee, only: [:show, :update, :destroy]
 
   # 拾えなかったExceptionが発生したら500 Internal server errorを応答する
   rescue_from Exception, with: :render_status_500
@@ -31,6 +31,11 @@ class Api::V1::EmployeesController < ApiController
     else
       render json: {errors: @employee.errors.full_messages }, stats: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @employee.destroy!
+    head :no_content
   end
 
   private
