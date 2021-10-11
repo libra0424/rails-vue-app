@@ -1,5 +1,5 @@
 class Api::V1::EmployeesController < ApiController
-  before_action :set_employee, only: [:show, :update, :destroy]
+  before_action :set_employee, only: %i[show update destroy]
 
   # 拾えなかったExceptionが発生したら500 Internal server errorを応答する
   rescue_from Exception, with: :render_status_500
@@ -29,7 +29,7 @@ class Api::V1::EmployeesController < ApiController
     if @employee.update(employee_params)
       head :no_content
     else
-      render json: {errors: @employee.errors.full_messages }, stats: :unprocessable_entity
+      render json: { errors: @employee.errors.full_messages }, stats: :unprocessable_entity
     end
   end
 
@@ -40,19 +40,19 @@ class Api::V1::EmployeesController < ApiController
 
   private
 
-    def set_employee
-      @employee = Employee.find(params[:id])
-    end
+  def set_employee
+    @employee = Employee.find(params[:id])
+  end
 
-    def employee_params
-      params.fetch(:employee, {}).permit(:name, :department, :gender, :birth, :joined_date, :payment, :note)
-    end
+  def employee_params
+    params.fetch(:employee, {}).permit(:name, :department, :gender, :birth, :joined_date, :payment, :note)
+  end
 
-    def render_status_404(exception)
-      render json: { errors: [exception] }, status: 404
-    end
+  def render_status_404(exception)
+    render json: { errors: [exception] }, status: :not_found
+  end
 
-    def render_status_500(exception)
-      render json: { errors: [exception] }, status: 500
-    end
+  def render_status_500(exception)
+    render json: { errors: [exception] }, status: :internal_server_error
+  end
 end
